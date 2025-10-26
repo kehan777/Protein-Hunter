@@ -738,7 +738,7 @@ def optimize_protein_design(
         # Compute n_target from actual structure
         token_exists = prev["state"].batch["inputs"]["token_exists_mask"][0]
         n_total = token_exists.sum().item()
-        prev["n_target"] = (n_total - len(prev["sequence"]))
+        prev["n_target"] = (n_total - len(prev["seq"]))
 
         result = prev["state"].result
         pae_metrics = compute_pae_metrics(result["pae"], prev["n_target"])
@@ -843,7 +843,7 @@ def optimize_protein_design(
                       use_alignment=use_alignment)
         
         val = {
-            "sequence":best["sequence"],
+            "seq":best["seq"],
             "state":folder.save_state(),
             "pdb":f"{prefix}_validation.cif",
         }
