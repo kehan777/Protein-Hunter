@@ -1,5 +1,12 @@
-# protein-hunter(chai)
-# Install
+# chai-protein-hunter
+
+# new features
+- support for multi-chain template
+- template weights (can use PDE for example)
+- weighted alignment during diffusion
+- partial diffusion (start with initial coordinates)
+
+# install
 ```bash
 sudo apt-get install -y -qq aria2
 ```
