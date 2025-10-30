@@ -54,8 +54,8 @@ warnings.filterwarnings(
     message="torch.utils.checkpoint: the use_reentrant parameter should be passed explicitly.*", 
     category=UserWarning
 )
+
 from utils.alphafold_utils import *
-from utils.pyrosetta_utils import *
 
 alphabet = list[str]("XXARNDCQEGHILKMFPSTWYV-")
 
@@ -148,6 +148,58 @@ def np_rmsd(true, pred):
 
     # Calculate RMSD
     return np.sqrt(np.mean(np.sum(np.square(p - q), axis=-1)) + 1e-8)
+
+
+
+
+class OutOfChainsError(Exception):
+    pass
+
+
+def rename_chains(structure):
+    """
+    Renames chains to be one-letter valid PDB chains.
+
+    Existing one-letter chains are kept. Others are renamed uniquely.
+    Raises OutOfChainsError if more than 62 chains are present.
+    Returns a map between new and old chain IDs.
+    """
+    next_chain = 0
+    chainmap = {c.id: c.id for c in structure.get_chains() if len(c.id) == 1}
+
+    for o in structure.get_chains():
+        if len(o.id) != 1:
+            if o.id[0] not in chainmap:
+                chainmap[o.id[0]] = o.id
+                o.id = o.id[0]
+            else:
+                c = int_to_chain(next_chain)
+                while c in chainmap:
+                    next_chain += 1
+                    if next_chain >= 62:
+                        raise OutOfChainsError()
+                    c = int_to_chain(next_chain)
+                chainmap[c] = o.id
+                o.id = c
+    return chainmap
+
+
+def sanitize_residue_names(structure):
+    """
+    Truncates all residue names to 3 characters (PDB format limit).
+    Logs a warning if truncation occurs.
+    """
+    for model in structure:
+        for chain in model:
+            for residue in chain:
+                resname = residue.resname
+                if len(resname) > 3:
+                    truncated = resname[:3]
+                    logging.warning(
+                        f"Truncating residue name '{resname}' to '{truncated}'"
+                    )
+                    residue.resname = truncated
+
 
 def convert_cif_to_pdb(ciffile, pdbfile):
     """
@@ -1010,6 +1062,7 @@ def calculate_holo_apo_rmsd(af_pdb_dir, af_pdb_dir_apo, binder_chain):
         df_confidence_csv.to_csv(confidence_csv_path, index=False)
 
 
+
 def run_alphafold_step(
     yaml_dir,
     alphafold_dir,
@@ -1095,6 +1148,7 @@ def run_alphafold_step(
 def run_rosetta_step(
     ligandmpnn_dir, af_pdb_dir, af_pdb_dir_apo, binder_id="A", target_type="protein"
 ):
+    from utils.pyrosetta_utils import measure_rosetta_energy
     """Run Rosetta energy calculation (protein targets only)"""
     if target_type not in ["protein", "peptide"]:
         print("Skipping Rosetta step (not a protein/peptide target)")
