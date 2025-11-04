@@ -56,7 +56,7 @@ We have implemented two different AF3-style models in our Protein Hunter pipelin
 👉 See example usage in `run_protein_hunter.py` for reference. 🐍✨  
 This will take you from an initial input to final designed protein structures and sequences, all in one pipeline!
 
-> ⚠️ **Caution:** The original evaluation in the paper used an all-X sequence for initial design. However, to increase the diversity of generated folds, you can mix random amino acids with X residues by setting the `percent_X` parameter (e.g., `--percent_X 50` for 50% X and 50% random AAs). Adjusting this ratio helps explore a broader design space.
+> 💡 **Tips:** The original evaluation in the paper used an all-X sequence for initial design. However, to increase the diversity of generated folds, you can mix random amino acids with X residues by setting the `percent_X` parameter (e.g., `--percent_X 50` for 50% X and 50% random AAs). Adjusting this ratio helps explore a broader design space.
 
 ## Protein Hunter (Boltz Edition ⚡) 
 
