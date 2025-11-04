@@ -52,7 +52,7 @@ We have implemented two different AF3-style models in our Protein Hunter pipelin
 
 ## Run Code End-to-End
 
-1️⃣ **End-to-end structure and sequence generation**  
+## 1️⃣ End-to-end structure and sequence generation  
 👉 See example usage in `run_protein_hunter.py` for reference. 🐍✨  
 This will take you from an initial input to final designed protein structures and sequences, all in one pipeline!
 
@@ -112,7 +112,7 @@ This will take you from an initial input to final designed protein structures an
   python chai_ph/design.py --jobname ligand_binder --length 120 --percent_X 0 --seq "" --target_seq O=C(NCc1cocn1)c1cnn(C)c1C(=O)Nc1ccn2cc(nc2n1)c1ccccc1 --n_trials 1 --n_cycles 5 --n_recycles 3 --n_diff_steps 200 --hysteresis_mode esm --repredict --omit_aa "" --temperature 0.01 --scale_temp_by_plddt --render_freq 100 --gpu_id 2
   ```
 
-2️⃣ **Refine your own designs!**  
+## 2️⃣ Refine your own designs!
 🛠️ You can provide your initial designs as input and further improve their structure by iteratively redesigning and predicting the structure. Repeat as needed for optimal results!
 
 
