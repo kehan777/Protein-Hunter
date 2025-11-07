@@ -39,7 +39,7 @@ def parse_args():
     parser.add_argument("--nucleic_seq", default="", type=str)
     parser.add_argument(
         "--template_path", default="", type=str
-    )  # can be "2VSM", or path(s) to .cif/.pdb, multiple allowed separated by comma
+    )  #path(s) to .cif/.pdb, multiple allowed separated by colon or comma
     parser.add_argument(
         "--template_chain_id", default="", type=str
     )  # for prediction, the chain id to use for the template
