@@ -23,7 +23,7 @@ def parse_args():
     sequence_group.add_argument(
         "--percent_X",
         type=int,
-        default=50,
+        default=80,
         help="Percentage of 'X' residues in the initial sequence (0, 50, or 100).",
     )
     sequence_group.add_argument(

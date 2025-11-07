@@ -134,13 +134,13 @@ To use AlphaFold3 validation, make sure your AlphaFold3 Docker is installed, spe
 - **Protein binder design:**  
   To design a binder for a specific protein target (e.g., PDL1):
   ```
-  python chai_ph/design.py --jobname PDL1_binder --length 120 --percent_X 50 --seq "" --target_seq AFTVTVPKDLYVVEYGSNMTIECKFPVEKQLDLAALIVYWEMEDKNIIQFVHGEEDLKVQHSSYRQRARLLKDQLSLGNAALQITDVKLQDAGVYRCMISYGGADYKRITVKVNAPYAAALE --n_trials 1 --n_cycles 5 --n_recycles 3 --n_diff_steps 200 --hysteresis_mode templates --repredict --omit_aa "" --temperature 0.1 --scale_temp_by_plddt --render_freq 100 --gpu_id 2 --use_msa_for_af3 --plot
+  python chai_ph/design.py --jobname PDL1_binder --length 120 --percent_X 80 --seq "" --target_seq AFTVTVPKDLYVVEYGSNMTIECKFPVEKQLDLAALIVYWEMEDKNIIQFVHGEEDLKVQHSSYRQRARLLKDQLSLGNAALQITDVKLQDAGVYRCMISYGGADYKRITVKVNAPYAAALE --n_trials 1 --n_cycles 5 --n_recycles 3 --n_diff_steps 200 --hysteresis_mode templates --repredict --omit_aa "" --temperature 0.1 --scale_temp_by_plddt --render_freq 100 --gpu_id 2 --use_msa_for_af3 --plot
   ```
 
 - **Cyclic protein binder design:**  
   Design a cyclic peptide binder for a specific protein target:
   ```
-  python chai_ph/design.py --jobname PDL1_cyclic_binder --length 120 --percent_X 50 --seq "" --cyclic --target_seq AFTVTVPKDLYVVEYGSNMTIECKFPVEKQLDLAALIVYWEMEDKNIIQFVHGEEDLKVQHSSYRQRARLLKDQLSLGNAALQITDVKLQDAGVYRCMISYGGADYKRITVKVNAPYAAALE --n_trials 1 --n_cycles 5 --n_recycles 3 --n_diff_steps 200 --hysteresis_mode templates --repredict --omit_aa "" --temperature 0.1 --scale_temp_by_plddt --render_freq 100 --gpu_id 2 --use_msa_for_af3 --plot
+  python chai_ph/design.py --jobname PDL1_cyclic_binder --length 120 --percent_X 80 --seq "" --cyclic --target_seq AFTVTVPKDLYVVEYGSNMTIECKFPVEKQLDLAALIVYWEMEDKNIIQFVHGEEDLKVQHSSYRQRARLLKDQLSLGNAALQITDVKLQDAGVYRCMISYGGADYKRITVKVNAPYAAALE --n_trials 1 --n_cycles 5 --n_recycles 3 --n_diff_steps 200 --hysteresis_mode templates --repredict --omit_aa "" --temperature 0.1 --scale_temp_by_plddt --render_freq 100 --gpu_id 2 --use_msa_for_af3 --plot
   ```
 
 - **Small molecule (ligand) binder design:**  
