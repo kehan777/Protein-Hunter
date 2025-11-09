@@ -379,49 +379,43 @@ def measure_rosetta_energy(
 
     new_rows = []
     
-    # for pdb_file in os.listdir(pdbs_path):
-    #     if pdb_file.endswith(".pdb") and not pdb_file.startswith("relax_"):
-    #         if pdb_file in processed_files:
-    #             continue
+    for pdb_file in os.listdir(pdbs_path):
+        if pdb_file.endswith(".pdb") and not pdb_file.startswith("relax_"):
+            if pdb_file in processed_files:
+                continue
 
-    #         try:
-    #             design_pathway = os.path.join(pdbs_path, pdb_file)
-    #             relax_pathway = os.path.join(relaxed_dir, f"relax_{pdb_file}")
+            try:
+                design_pathway = os.path.join(pdbs_path, pdb_file)
+                relax_pathway = os.path.join(relaxed_dir, f"relax_{pdb_file}")
                 
-    #             # Check for chain ID from holo PDB (might be A or B depending on AF3 processing)
-    #             binder_chain = get_binder_chain(design_pathway)
+                # Check for chain ID from holo PDB (might be A or B depending on AF3 processing)
+                binder_chain = get_binder_chain(design_pathway)
                 
-    #             pr_relax(design_pathway, relax_pathway)
+                pr_relax(design_pathway, relax_pathway)
                 
-    #             (
-    #                 trajectory_interface_scores,
-    #                 trajectory_interface_AA,
-    #                 trajectory_interface_residues,
-    #             ) = score_interface(relax_pathway, binder_chain, target_chain="A")
+                (
+                    trajectory_interface_scores,
+                    trajectory_interface_AA,
+                    trajectory_interface_residues,
+                ) = score_interface(relax_pathway, binder_chain, target_chain="A")
                 
-    #             print(f"Rosetta scores for {pdb_file}: {trajectory_interface_scores}")
+                print(f"Rosetta scores for {pdb_file}: {trajectory_interface_scores}")
 
-    #             row_data = {"PDB": relaxed_dir, "Model": f"relax_{pdb_file}"}
-    #             row_data.update(trajectory_interface_scores)
-    #             new_rows.append(row_data)
-    #             processed_files.add(pdb_file)
+                row_data = {"PDB": relaxed_dir, "Model": f"relax_{pdb_file}"}
+                row_data.update(trajectory_interface_scores)
+                new_rows.append(row_data)
+                processed_files.add(pdb_file)
                 
-    #         except Exception as e:
-    #             print(f"Error processing {pdb_file}: {e}")
+            except Exception as e:
+                print(f"Error processing {pdb_file}: {e}")
 
     # Append new rows and save
-    # if new_rows:
-    #     df = pd.concat([df, pd.DataFrame(new_rows)], ignore_index=True)
-    #     df.to_csv(output_path, index=False)
-    #     print(f"✅ New Rosetta results appended to {output_path}")
-    # else:
-    #     print("No new PDB files to process for Rosetta scoring.")
-
-    if os.path.exists(output_path):
-        df = pd.read_csv(output_path)
+    if new_rows:
+        df = pd.concat([df, pd.DataFrame(new_rows)], ignore_index=True)
+        df.to_csv(output_path, index=False)
+        print(f"✅ New Rosetta results appended to {output_path}")
     else:
-        print("No Rosetta results found.")
-        return
+        print("No new PDB files to process for Rosetta scoring.")
 
     # --- Filtering Logic ---
     if df.empty:
